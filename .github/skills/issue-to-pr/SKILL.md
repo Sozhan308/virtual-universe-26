@@ -21,14 +21,23 @@ same `gh` commands you ran by hand in Section 1.
    `gh issue list --state open`
 3. Read the issue and the code it mentions: `gh issue view <n>`
 4. Create a branch: `git switch -c fix/issue-<n>`
-5. Make the smallest change that fixes the issue, and run the project's tests
+5. If the fix needs library or API documentation, use the Context7 connector
+   to look it up. Send only public documentation queries; do not include
+   repository files, private code, or secrets. If the connector or its tools
+   are unavailable, report that instead of claiming the lookup succeeded.
+   Make the smallest change that fixes the issue, and run the project's tests
    if it has any.
-6. Commit only the files you changed for this issue, push the branch to the
+6. Run the built-in `/security-review` skill on the changes. Fix any HIGH or
+   CRITICAL findings before proceeding, and list all other findings in the
+   pull request body. If the review is unavailable or HIGH or CRITICAL
+   findings cannot be fixed, report the blocker and stop before committing.
+7. Commit only the files you changed for this issue, push the branch to the
    fork, and open a draft pull request that closes the issue:
    `gh pr create --draft --title "Fix #<n>: <issue title>" --body "<body>"`
    Start the body with "Closes #<n>", then add a short summary and a
-   "How to test" section with the exact commands a reviewer can run.
-7. Ask before commenting on the issue with what changed and how to test it.
+   "How to test" section with the exact commands a reviewer can run. Cite
+   relevant documentation sources consulted for the fix.
+8. Ask before commenting on the issue with what changed and how to test it.
    Report the exact issue, PR, and branch. Leave this PR branch checked out so
    the learner can review it in the same session; do not switch branches.
 
